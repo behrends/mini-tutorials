@@ -51,17 +51,17 @@ Die zur Laufzeit von `crisp-game-lib` bereitgestellte Variable `ticks` in der `u
 ### Nadeln anzeigen
 
 Deklariere eine Variable `pins` außerhalb der `update`-Funktion.
-Diese Variable wird im Rumpf der `if`-Bedingung beim ersten Aufruf von `update` zur Initialisierung ein Array mit einem Vektor-Element zugewiesen:
+Beim ersten Aufruf von `update` wird `pins` im Rumpf der `if`-Bedingung ein Array mit einem Vektor-Element zugewiesen:
 
 ```
 pins = [vec(50, 5)];
 ```
 
-`pins` („Nadeln“) wird als Array alle auf dem Bildschirm sichtbaren Nadeln enthalten.
+`pins` („Nadeln“ auf Englisch) ist ein Array, das später die Koordinaten aller auf dem Bildschirm sichtbaren Nadeln enthalten wird.
 
 Die `vec()` Funktion erstellt eine [Vector](https://abagames.github.io/crisp-game-lib/ref_document/classes/Vector.html) Instanz mit der x-Koordinate (hier `50`) als erstem Argument und der y-Koordinate als zweitem (hier `5`). Neben `vec` werden wir einige weitere Funktionen von `crisp-game-lib` verwenden.
 
-`forEach` wird verwendet, um eine [Box](https://abagames.github.io/crisp-game-lib/ref_document/functions/box.html) mit jedem Element von `pins` als Koordinaten zu zeichnen. Zu Beginn des Spiels ist dies erste eine Box und bei späteren Aufrufen von `update` werden weitere hinzukommen.
+Die Array-Funktion `forEach` wird verwendet, um mit den Koordinaten jedes Elements in `pins` eine [Box](https://abagames.github.io/crisp-game-lib/ref_document/functions/box.html) zu zeichnen. Zu Beginn des Spiels ist dies erste eine Box und bei späteren Aufrufen von `update` werden weitere hinzukommen.
 
 Die `box` Funktion nimmt Koordinaten als erstes Argument (hier ein `Vector`) und seine Größe als zweites Argument (`3`). Der `crisp-game-lib` Bildschirm besteht aus 100x100 Punkten, mit (0,0) oben links und (99,99) unten rechts, sodass das Kästchen (`Box`) horizontal in der Mitte (`50`) und vertikal an der oberen Kante (`5`) erscheint.
 
