@@ -1,3 +1,3 @@
 # Mini tutorials
 
-[Pinclimb](/pinclimb)
+[Pinclimb](pinclimb)
