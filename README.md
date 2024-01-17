@@ -10,17 +10,17 @@ durch eine einzige Interaktionsmöglichkeit wie z.B. das
 „Drücken“ bzw. „Gedrückt halten“ eines Touch-Displays, Trackpads
 oder Mausbuttons bedienbar ist.
 
-Bei einem Ein-Knopf-Mini-Spiel ist es wesentlich, sich zu entscheiden, welche Funktionen dem einen Knopf zugewiesen werden sollen. Für weitere Informationen bitte folgende Artikel beachten:
+Bei einem Ein-Knopf-Mini-Spiel ist es wesentlich, sich zu entscheiden, welche Funktionen dem einen Knopf zugewiesen werden sollen. Dazu gibt es weitere Informationen in folgendem Artikel:
 
 - [How to realize various actions in a one-button game](https://dev.to/abagames/how-to-realize-various-actions-in-a-one-button-game-fak)
 
-Wir werden die Funktion "stretch" (dehnen) dem einen Knopf im Spiel zuweisen, das wir gleich erstellen werden. Die Regeln des Spiels sind nachfolgend aufgezeigt.
+In dem Spiel, das wir gleich erstellen werden, werden wir die Funktion "stretch" (dehnen) dem einen Knopf zuweisen. Dies sind die Regeln des Spiels:
 
-- Du kontrollierst ein sich drehendes „Seil“.
-- Das Seil dehnt sich, solange der Knopf gedrückt gehalten wird und schrumpft, wenn der Knopf losgelassen wird.
-- Das Seil dreht sich um eine Position, die mit einer „Nadel“ (oder „Stecknadel“) markiert ist.
-- Nadeln erscheinen von oben auf dem Bildschirm und scrollen nach unten.
-- Wenn das Seil an einer anderen Nadel hängen bleibt, bewegt sich das Seil zu dieser Nadel.
+- Du kontrollierst ein sich drehendes „Seil“, das als gerade Linie dargestellt wird.
+- Das Seil dehnt sich und wird immer länger, solange der Knopf gedrückt gehalten wird, und es schrumpft, wenn der Knopf losgelassen wird.
+- Das Seil dreht sich um eine Position, die mit einer „Nadel“ markiert ist.
+- Neue Nadeln erscheinen forlaufend von oben auf dem Bildschirm und scrollen nach unten.
+- Wenn das Seil auf eine andere Nadel stößt, bewegt sich das Seil zu dieser Nadel und dreht sich von nun um diese.
 - Wenn das Seil den unteren Bildschirmrand erreicht, ist das Spiel vorbei.
 
 <br><br><br><br>
@@ -31,20 +31,18 @@ Wir werden die Funktion "stretch" (dehnen) dem einen Knopf im Spiel zuweisen, da
 
 Um ein Spiel mit `crisp-game-lib` zu erstellen, musst du den Vorlagen-Quellcode vorbereiten. Für mehr Informationen siehe [Getting started](https://github.com/abagames/crisp-game-lib#getting-started).
 
-<br>
-
 Lass mich erklären, wie du mit diesem Artikel arbeitest. Wird der Quellcode auf der rechten Seite des Bildschirms angezeigt? Wenn nicht, scrolle die Seite nach unten, bis dieser Textabschnitt ungefähr in der Mitte des Bildschirms ist.
 
-Der neu hinzugefügte Quellcode wird auf der rechten Seite des Bildschirms angezeigt. Die Anzeige ist in einem [vereinheitlichen Format von diff](https://en.wikipedia.org/wiki/Diff#Unified_format). Zeilen die mit `+` am Anfang stehen, sind hinzugefügte Zeilen, und Zeilen mit `-` sind gelöschte Zeilen.
+Der neu hinzugefügte Quellcode wird auf der rechten Seite des Bildschirms angezeigt. Die Anzeige ist in einem [vereinheitlichen Format von diff](https://en.wikipedia.org/wiki/Diff#Unified_format). Zeilen die ein `+` am Anfang haben, sind hinzugefügte Zeilen, und Zeilen mit `-` sind gelöschte Zeilen.
 
 <br>
 
 Schau dir die Vorlage rechts oben auf dem Bildschirms an. `title` ,`description`, `characters` und `options` sind (globale) Variablen.
-Mit `title` wird der Titel des Spiels bestimmt und `description` ist ein möglicherweise mehrzeiliger Template-String für die Beschreibung des Spiels, die z.B. die Bedienung erklärt. `characters` definieren die auf dem Bildschirm angezeigte Pixelkunst als Array und `options` ist ein JavaScript-Object, um die Spieleinstellungen festzulegen. Diese Variablen werden später gesetzt. Siehe die `crisp-game-lib`-Referenz von [char()](https://abagames.github.io/crisp-game-lib/ref_document/functions/char.html) und [Options](https://abagames.github.io/crisp-game-lib/ref_document/types/Options.html) für weitere Informationen.
+Mit `title` wird der Titel des Spiels bestimmt und `description` ist ein möglicherweise mehrzeiliger Template-String für die Beschreibung des Spiels, die z.B. die Bedienung erklärt. `characters` definieren die auf dem Bildschirm angezeigte Pixelkunst (z.B. Spielfiguren) als Array und `options` ist ein JavaScript-Object, um die Spieleinstellungen festzulegen. Diese Variablen werden wir später festlegen. Siehe die `crisp-game-lib`-Referenz von [char()](https://abagames.github.io/crisp-game-lib/ref_document/functions/char.html) und [Options](https://abagames.github.io/crisp-game-lib/ref_document/types/Options.html) für weitere Informationen.
 
-Die `update` Funktion beschreibt die Logik des Spiels und muss von uns definiert werden. Die `update` Funktion wird von `crisp-game-lib` automatisch 60-mal pro Sekunde aufgerufen, um den Spielbildschirm zu zeichnen, auf Mausoperationen zu reagieren usw.
+Die `update` Funktion beschreibt die Logik des Spiels und muss von uns definiert werden. Die `update` Funktion wird von `crisp-game-lib` automatisch 60-mal pro Sekunde aufgerufen, um den Spielbildschirm zu zeichnen, auf Mausoperationen zu reagieren, usw.
 
-Die zur Laufzeit von `crisp-game-lib` bereitgestellte Variable `ticks` in der `update` Funktion ist `0`, wenn das Spiel startet. `ticks` wird automatisch in jedem Funktionsaufruf von `update` (alle 1/60 Sekunden) um eins erhöht. Die Anweisung `if (!ticks) {}`ist gleichbedeutend mit`if (ticks === 0) {}`, und die Initialisierungsprozedur zu Spielbeginn kann im `if`-Rumpf `{}` durchgeführt werden.
+Die zur Laufzeit von `crisp-game-lib` bereitgestellte Variable `ticks` in der `update` Funktion ist `0`, wenn das Spiel startet. `ticks` wird automatisch in jedem Funktionsaufruf von `update` (alle 1/60 Sekunden) um eins erhöht. Die Anweisung `if (!ticks) {}`ist gleichbedeutend mit`if (ticks === 0) {}`. Die Initialisierungsprozedur zu Spielbeginn kann im `if`-Rumpf `{}` durchgeführt werden.
 
 <br><br><br><br>
 
