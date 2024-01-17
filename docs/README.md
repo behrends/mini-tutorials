@@ -1,4 +1,5 @@
 # Mini tutorials
 
-[Pinclimb](pinclimb)
-[Memory](memory)
+## [Pinclimb](pinclimb)
+
+## [Memory](memory)
