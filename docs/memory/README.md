@@ -138,7 +138,7 @@ if (card.flipped) {
 
 ### Karten aufdecken
 
-(src) [07_mouse.js](./src/07_mouse.js)
+(src) [06_mouse.js](./src/06_mouse.js)
 
 `mousePressed` ist eine Funktion von p5.js, die automatisch aufgerufen wird, wenn die Maus gedrückt wird. Wir können diese Funktion nutzen, um zu prüfen, ob der Mauszeiger über einer Karte ist. Dazu implementieren wir `mousePressed` außerhalb von `setup` und `draw`.
 
@@ -181,7 +181,7 @@ Die `break`-Anweisung sorgt dafür, dass die `for`-Schleife abgebrochen wird, so
 
 ### Karten miteinander vergleichen
 
-(src) [09_match.js](./src/09_match.js)
+(src) [07_match.js](./src/07_match.js)
 
 Wir wollen nun die Karten miteinander vergleichen, um zu prüfen, ob sie gleichfarbig sind. Dafür benötigen wir zwei weitere Variablen: eine für den Index der zuletzt aufgedeckten Karte (`lastFlippedIndex`) und eine die anzeigt, ob wir gerade zwei Karten miteinander vergleichen (`checkingMatch`). Diese Variablen werden außerhalb von `setup` und `draw` definiert:
 
