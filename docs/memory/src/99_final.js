@@ -40,7 +40,7 @@ function draw() {
 }
 
 function mousePressed() {
-  if (checkingMatch) return; // Ignore clicks while checking
+  if (checkingMatch) return;
 
   for (let i = 0; i < cards.length; i++) {
     let x = (i % 4) * 200 + 10;
