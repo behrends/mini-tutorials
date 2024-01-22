@@ -11,7 +11,7 @@ let colors = [
 ];
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(600, 600);
 
   for (let i = 0; i < colors.length; i++) {
     cards.push({ color: colors[i], flipped: false });
@@ -31,7 +31,7 @@ function draw() {
       } else {
         fill('white');
       }
-      square(x * 200 + 10, y * 200 + 10, 180);
+      square(x * 150 + 5, y * 150 + 5, 140);
       index++;
     }
   }

@@ -11,7 +11,7 @@ let colors = [
 ];
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(600, 600);
 
   for (let i = 0; i < colors.length; i++) {
     cards.push({ color: colors[i], flipped: false });

@@ -9,7 +9,7 @@ Dies sind die Regeln des Spiels:
 - Es gibt 16 Karten mit einer farbigen und einer grauen Seite.
 - Jeweils zwei Karten haben die gleiche Farbe.
 - Zu Beginn liegt die farbige Seite jeder Karte verdeckt auf dem Tisch, die graue Seite ist sichtbar.
-- Der Spieler deckt zwei Karten auf. Sind die Karten gleichfarbig, bleiben sie aufgedeckt. Sind sie verschieden, werden sie wieder nach einer Sekunde umgedreht.
+- Der Spieler deckt zwei Karten auf. Sind die Karten gleichfarbig, bleiben sie aufgedeckt. Sind sie verschieden, werden sie nach einer Sekunde wieder verdeckt bzw. umgedreht.
 - Der Spieler muss sich die Position der Karten merken, um sie beim nächsten Zug wieder aufdecken zu können.
 - Das Spiel ist zu Ende, wenn alle Karten aufgedeckt sind.
 
@@ -25,7 +25,7 @@ Lass mich erklären, wie du mit diesem Mini-Tutorial arbeitest. Wird der Quellco
 
 (src) [00_start.js](./src/00_start.js)
 
-Der neu hinzugefügte Quellcode wird auf der rechten Seite des Bildschirms angezeigt. Die Anzeige ist in einem [vereinheitlichen Format von diff](https://en.wikipedia.org/wiki/Diff#Unified_format). Zeilen die ein `+` am Anfang haben, sind hinzugefügte Zeilen, und Zeilen mit `-` sind gelöschte Zeilen.
+Der neu hinzugefügte Quellcode wird auf der rechten Seite des Bildschirms angezeigt. Die Anzeige ist in einem [vereinheitlichen Format von diff](https://en.wikipedia.org/wiki/Diff#Unified_format), wodurch Unterschiede zwischen Änderungen an Textdateien gegenübergestellt werden. Zeilen die ein `+` am Anfang haben, sind hinzugefügte Zeilen, und Zeilen mit `-` sind gelöschte Zeilen. Dadurch kannst du die einzelnen Schritte nachvollziehen, die wir im Laufe dieses Tutorials durchführen werden.
 
 ### Zeichenbereich erstellen
 
@@ -34,9 +34,9 @@ Wenn du den [Editor von p5.js](https://editor.p5js.org/) im Browser zum ersten M
 - `setup` und
 - `draw`
 
-Die Funktion `setup` wird automatisch von p5.js einmal aufgerufen und ausgeführt, wenn das Programm startet. Die Funktion `draw` wird automatisch immer wieder ausgeführt, nachdem `setup` ausgeführt wurde.
+Die Funktion `setup` wird automatisch von p5.js einmal aufgerufen und ausgeführt, wenn das Programm startet. Die Funktion `draw` wird automatisch immer wieder ausgeführt, nachdem `setup` ausgeführt wurde, solange das Programm läuft.
 
-In `setup` wird das Programm vorbereitet. Hier bestimmen wir die Größe des Zeichenbereichs (Leinwand, _canvas_). Standardmäßig wird `createCanvas` so aufgerufen , dass ein Zeichenbereich mit einer Breite von 400 Pixeln und einer Höhe von 400 Pixeln erstellt wird:
+In `setup` wird das Programm vorbereitet. Hier bestimmen wir die Größe des Zeichenbereichs (Leinwand, _canvas_). Standardmäßig wird `createCanvas` mit `400, 400` aufgerufen, sodass ein Zeichenbereich mit einer Breite von 400 Pixeln und einer Höhe von 400 Pixeln erstellt wird:
 
 ```js
 function setup() {
@@ -59,9 +59,9 @@ Wir werden im Laufe dieses Tutorials noch weitere Funktionen von p5.js kennenler
 
 (src) [01_setup.js](./src/01_setup.js)
 
-Wir wollen nun die Größe der Leinwand ändern. Ändere die Werte in dem Aufruf von `createCanvas` in der `setup`-Funktion von `400` auf `800`, damit der Zeichenbereich größer wird.
+Wir wollen nun die Größe der Leinwand ändern. Ändere die Werte in dem Aufruf von `createCanvas` in der `setup`-Funktion von `400` auf `600`, damit der Zeichenbereich größer wird.
 
-Außerdem wollen wir sprechende Farbnamen anstatt numerischer Werte nutzen. Ändere den Wert in dem Aufruf von `background` in der `draw`-Funktion von `220` auf `lightgrey` und beobachte, wie sich nun Größe und Farbe des Zeichenbereichs ändern, wenn du auf den `Play`- bzw. `Run`-Button klickst.
+Außerdem wollen wir sprechende Farbnamen anstatt numerischer Werte nutzen. Ändere den Wert in dem Aufruf von `background` in der `draw`-Funktion von `220` auf `lightgrey` und beobachte, wie sich nun Größe und Farbe des Zeichenbereichs ändern, wenn du im p5js-Editor auf den `Play`- bzw. `Run`-Button oben links drückst.
 
 Zum Experimentieren kannst du natürlich auch andere Farbnamen ausprobieren. Es gibt verschiedene Möglichkeiten, Farben in p5.js zu definieren, z.B. mit RGB-Werten oder mit HSL-Werten. Eine Übersicht über die verschiedenen Möglichkeiten findest du [hier](https://p5js.org/learn/color.html). Wir wollen die Verwendung von Farben in diesem Mini-Tutorial möglichst einfach halten und nutzen daher sprechende Farbnamen.
 
@@ -85,7 +85,7 @@ let colors = [
 ];
 ```
 
-Diese werden außerhalb der Funktionen `setup` und `draw` definiert, damit sie in beiden Funktionen und auch in später hinzugefügten Funktionen genutzt werden können. Die Variable `cards` wird später die Karten des Spiels enthalten. Die Variable `colors` enthält die Farben, die wir für die Karten nutzen wollen.
+Diese werden außerhalb der Funktionen `setup` und `draw` definiert, damit sie in beiden Funktionen und auch in später hinzugefügten Funktionen genutzt werden können. Die Variable `cards` wird später die 16 Karten des Spiels enthalten. Die Variable `colors` enthält die 8 Farben, die wir für die Karten nutzen wollen.
 
 ### Karten erstellen
 
@@ -103,17 +103,19 @@ cards = shuffle(cards);
 
 Jede Karte wird hier durch ein JavaScript-Objekt (`{...}`) repräsentiert, wobei die Eigenschaft `color` die Farbe anzeigt und `flipped` angibt, ob die Karte aufgedeckt ist oder nicht. Die Eigenschaft `flipped` wird zu Beginn auf `false` gesetzt, da alle Karten zu Beginn des Spiels noch nicht aufgedeckt sind.
 
+Diese Änderung hat keine sichtbare Auswirkung auf den Zeichenbereich.
+
 ### Karten im Zeichenbereich zeichnen
 
 (src) [04_tiles.js](./src/04_tiles.js)
 
-Nun wechseln wir in die `draw`-Funktion, die von p5.js immer wieder aufgerufen wird und dafür sorgt, dass etwas im Zeichenbereich dargestellt wird. Mit zwei geschachtelten `for`-Schleifen laufen wir jeweils von 0 bis 3 (d.h. `< 4`), sodass wir alle Zeilen und Spalten eines 4x4-Gitters durchlaufen. In diesen Schleifen zeichnen wir nun die Karten auf den Zeichenbereich auf das 4x4-Gitter. Dafür nutzen wir die p5.js-Hilfsfunktion `square`:
+Nun wechseln wir in die `draw`-Funktion, die von p5.js immer wieder während der Programmausführung aufgerufen wird und dafür sorgt, dass etwas im Zeichenbereich dargestellt wird. Mit zwei geschachtelten `for`-Schleifen laufen wir jeweils von 0 bis 3 (d.h. `< 4`), sodass wir alle Zeilen und Spalten eines 4x4-Gitters durchlaufen. In diesen Schleifen zeichnen wir nun die Karten auf den Zeichenbereich auf das 4x4-Gitter. Dafür nutzen wir die p5.js-Hilfsfunktion `square`:
 
 ```js
-square(x * 200 + 10, y * 200 + 10, 180);
+square(x * 150 + 5, y * 150 + 5, 140);
 ```
 
-Die Funktion `square` zeichnet das Quadrat auf den Zeichenbereich. Die ersten beiden Parameter sind die x- und y-Koordinaten des Quadrats auf der Zeichenfläche. Der Nullpunkt des Koorinatensystems liegt in der oberen linken Ecke des Zeichenbereichs, sodass diese Quadrate ab links oben erscheinen werden. Die dritte Zahl im Aufruf von `square` ist die Größe des Quadrats (`180`). Durch die Multiplikation mit `200` und die Addition von `10` wird die Position des Quadrats auf dem Zeichenbereich berechnet.
+Die Funktion `square` zeichnet das Quadrat auf den Zeichenbereich. Die ersten beiden Parameter sind die x- und y-Koordinaten der linken oberen Ecke des Quadrats auf der Zeichenfläche. Der Nullpunkt des Koorinatensystems liegt in der oberen linken Ecke des Zeichenbereichs, sodass diese Quadrate ab links oben erscheinen werden. Die dritte Zahl im Aufruf von `square` ist die Größe des Quadrats (`140`). Durch die Multiplikation mit `150` und die Addition von `5` wird die Position jedes der 16 Quadrate auf dem Zeichenbereich berechnet. Der Wert `5` ist hierbei ein Abstand, der zwischen den Quadraten und dem Rand des Zeichenbereichs bleibt.
 
 **Tipp: Spickzettel (cheat sheet) für p5.js**
 
@@ -123,7 +125,9 @@ In diesem [Spickzettel](https://bmoren.github.io/p5js-cheat-sheet/de.html) finde
 
 (src) [05_tiles_color.js](./src/05_tiles_color.js)
 
-Innerhalb der geschachtelten `for`-Schleife können wir mit einer `if`-Bedingung prüfen, ob die Karte aufgedeckt ist oder nicht. Ist die Karte aufgedeckt, dann wollen wir die farbige Seite der Karte darstellen. Dafür nutzen wir die Eigenschaft `color` der Karte. Diese Eigenschaft enthält den Namen der Farbe, die wir nutzen wollen. Wir können diese Eigenschaft nutzen, um die Farbe des Quadrats zu ändern:
+Innerhalb der geschachtelten `for`-Schleife können wir mit einer `if`-Bedingung prüfen, ob die zu zeichnende Karte aufgedeckt ist oder nicht. Dabei hilt uns eine Zählervariablen `index`, die wir außerhalb der `for`-Schleifen definieren. Diese Variable wird am Ende der `for`-Schleife hochgezählt und enthält den Index der Karte, die wir gerade zeichnen wollen.
+
+Ist die Karte aufgedeckt, dann wollen wir die farbige Seite der Karte darstellen. Dafür nutzen wir die Eigenschaft `color` der Karte. Diese Eigenschaft enthält den Namen der Farbe, die wir nutzen wollen. Wir können diese Eigenschaft nutzen, um die Farbe des Quadrats zu ändern:
 
 ```js
 let card = cards[index];
@@ -136,13 +140,15 @@ if (card.flipped) {
 
 `fill` ist eine Funktion von p5.js, die die Farbe für die nächsten Zeichenoperationen festlegt. In diesem Fall wird die Farbe der Karte genutzt, wenn die Karte aufgedeckt ist, und ansonsten wird die Farbe `white` genutzt.
 
+**Tipp:** Wenn die `if`-Bedingung vorübergehend mit `if (card.flipped === false)` ändern, dann ist die Verteilung der farbigen Karten auf dem Zeichenbereich zu sehen. Vergiss nicht, wieder auf `if (card.flipped)` zu ändern, damit die Karten wieder verdeckt sind (`if (card.flipped)` entspricht `if (card.flipped === true)`).
+
 ### Karten aufdecken
 
 (src) [06_mouse.js](./src/06_mouse.js)
 
-`mousePressed` ist eine Funktion von p5.js, die automatisch aufgerufen wird, wenn die Maus gedrückt wird. Wir können diese Funktion nutzen, um zu prüfen, ob der Mauszeiger über einer Karte ist. Dazu implementieren wir `mousePressed` außerhalb von `setup` und `draw`.
+`mousePressed` ist eine Funktion von p5.js, die automatisch aufgerufen wird, wenn die Maus gedrückt wird (oder ein Touchscreen angetippt wird). Wir können diese Funktion nutzen, um zu prüfen, ob der Mauszeiger über einer Karte ist. Dazu implementieren wir die Funktion `mousePressed` außerhalb von `setup` und `draw`.
 
-Wir laufen zunächst durch alle Karten:
+In `mousePressed` laufen wir zunächst durch alle Karten:
 
 ```js
 for (let i = 0; i < cards.length; i++) {
@@ -150,21 +156,21 @@ for (let i = 0; i < cards.length; i++) {
 }
 ```
 
-Und berechnen die Position der Karte auf dem Zeichenbereich (mit den Werten und Berechnungen wie in der `draw`-Funktion):
+Und berechnen die Position der Karte auf dem Zeichenbereich (mit den Werten und Berechnungen der Koordinaten wie in der `draw`-Funktion):
 
 ```js
-let x = (i % 4) * 200 + 10;
-let y = Math.floor(i / 4) * 200 + 10;
+let x = (i % 4) * 150 + 5;
+let y = Math.floor(i / 4) * 150 + 5;
 ```
 
-Dann prüfen wir, ob der Mauszeiger über der Karte ist:
+Dann prüfen wir, ob der Mauszeiger über der Karte ist (hier verwenden wir auch einen Versatz von `140`, weil die Karten 140x140 Pixel groß sind):
 
 ```js
 if (
   mouseX > x &&
-  mouseX < x + 180 &&
+  mouseX < x + 140 &&
   mouseY > y &&
-  mouseY < y + 180
+  mouseY < y + 140
 ) {
   cards[i].flipped = !cards[i].flipped;
   break;
@@ -196,7 +202,7 @@ In `mousePressed` verlassen wir die Funktion sofort, wenn wir gerade zwei Karten
 if (checkingMatch) return;
 ```
 
-Eine weitere Funktion `checkForMatch` prüft, ob die beiden Karten gleichfarbig sind. Das Vorgehen ist so, dass verschiedenfarbige Karten wieder umgedreht werden (`flipped = false`). Mit lastFlippedIndex = -1 wird angezeigt, dass gerade keine Karte aufgedeckt ist. Mit checkingMatch = false wird angezeigt, dass gerade keine Karten miteinander verglichen werden:
+Eine weitere Funktion `checkForMatch` prüft, ob die beiden Karten gleichfarbig sind. Das Vorgehen ist so, dass verschiedenfarbige Karten wieder umgedreht werden (`flipped = false`). Mit `lastFlippedIndex = -1` wird angezeigt, dass gerade keine Karte aufgedeckt ist. Mit `checkingMatch = false` wird angezeigt, dass gerade keine Karten miteinander verglichen werden:
 
 ```js
 function checkForMatch(currentIndex) {
@@ -209,7 +215,7 @@ function checkForMatch(currentIndex) {
 }
 ```
 
-Die `if`-Bedingung in `mousePressed` wird nun um die Prüfung erweitert, ob die Karte aufgedeckt ist und ob sie nicht die zuletzt aufgedeckte Karte ist:
+Die `if`-Bedingung in `mousePressed` wird nun um die Prüfung erweitert, ob die Karte aufgedeckt ist und ob sie nicht die zuletzt aufgedeckte Karte ist. Dies geschieht in einer weiteren `if`-Bedingung, die für eine zu prüfende Karte ausgeführt wird:
 
 ```js
 if (!cards[i].flipped && lastFlippedIndex !== i) {
@@ -223,10 +229,25 @@ if (!cards[i].flipped && lastFlippedIndex !== i) {
 }
 ```
 
-Die Karte wird dann aufgedeckt. Wenn die zuletzt aufgedeckte Karte nicht gesetzt ist (`lastFlippedIndex === -1`), dann wird der Index der zuletzt aufgedeckten Karte gesetzt. Wenn die zuletzt aufgedeckte Karte gesetzt ist, dann überprüfen wir, ob die beiden Karten gleichfarbig sind. Dafür wird die Funktion `checkForMatch` aufgerufen. Diese Funktion wird nicht sofort aufgerufen, sondern mit `setTimeout` wird ein Timer gestartet. Mit `setTimeout` und dem Wert `1000` wird der Timer auf eine Sekunde gesetzt. Das bedeutet, dass die Funktion `checkForMatch` erst nach einer Sekunde aufgerufen wird. Der Index der zuletzt aufgedeckten Karte wird als Parameter übergeben.
+Die Karte wird dann aufgedeckt. Wenn die zuletzt aufgedeckte Karte nicht gesetzt ist (`lastFlippedIndex === -1`), dann wird der Index der zuletzt aufgedeckten Karte gesetzt. Wenn die zuletzt aufgedeckte Karte gesetzt ist, dann überprüfen wir, ob die beiden Karten gleichfarbig sind. Dafür wird die Funktion `checkForMatch` aufgerufen. Diese Funktion wird nicht sofort aufgerufen, sondern mit `setTimeout` wird ein Timer gestartet. Mit `setTimeout` und dem Wert `1000` wird der Timer auf eine Sekunde gesetzt. Das bedeutet, dass die Funktion `checkForMatch` erst nach einer Sekunde aufgerufen wird. Der Index der zuletzt aufgedeckten Karte (`i`) wird als Parameter übergeben und durch `setTimeout` beim Aufruf an `checkForMatch` weitergereicht.
 
 Somit haben wir etwas Zeit, um uns die aufgedeckten Karten zu merken, bevor sie wieder umgedreht werden. Deswegen heißt das Spiel ja auch Memory.
 
-### Kompletter finaler Code
+### Kompletter finaler Programmcode
 
-Der finale Code [ist hier zu finden](./src/99_final.js).
+Der komplette, finale Code [ist hier zu finden](./src/99_final.js).
+
+Eine Verbesserung des Codes könnte durch zusätzlich Variablen außerhalb von `setup` und `draw` erreicht werden. So könnten wir
+feste Größen und Abstände auslagern, sodass sie leichter geändert werden können (Leinwandgröße, Abstände, Größe der Karten, usw.).
+
+Ideen zur Weiterentwicklung des Spiels:
+
+- Anzeige der benötigten Züge am Spielende
+- Neustart des Spiels durch Mausklick oder Knopfdruck
+- Punktezähler und Highscore-Liste hinzufügen
+- Timer einbauen und Anzeige der benötigten Zeit am Spielende
+- Spielkarten mit Bildern statt Farben
+- Timer der rückwärts läuft, sodass das Spiel verloren ist, wenn die Zeit abgelaufen ist.
+- Mehr Karten im Spiel (z.B. 6x6 oder 8x8)
+- Mehrere Schwierigkeitsstufen (z.B. 4x4, 6x6, 8x8, kürzere Zeit für aufgedeckte Karten, usw.)
+- Mehrere Spieler
