@@ -25,6 +25,12 @@ In dem Spiel, das wir gleich erstellen werden, werden wir die Funktion "stretch"
 
 <br><br><br><br>
 
+Wir verwenden [dieses Template in Codepen](https://codepen.io/pen?template=bGZrvzg), sodass du direkt im Browser programmieren und dort die hier besprochenen Änderungen am Code eintragen kannst. Klicke dazu [hier](https://codepen.io/pen?template=bGZrvzg).
+
+Es empfiehlt sich, den Editor in Codepen so anzupassen, dass der Code links zu sehen ist. Auf der rechten Seite wird dann das Spiel angezeigt. Alle Änderungen im Code werden hier ausschließlich in JavaScript programmiert, sodass die HTML- und CSS-Bereiche minimieren kannst. Siehe dazu diesen Screenschot:
+
+![Codepen](./img/codepen.png)
+
 (src) [0_template.js](./src/0_template.js)
 
 ### Vorbereiten des Vorlagen-Quellcodes
