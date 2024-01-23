@@ -23,7 +23,7 @@ In dem Spiel, das wir gleich erstellen werden, werden wir die Funktion "stretch"
 - Wenn das Seil auf eine andere Nadel stößt, bewegt sich das Seil zu dieser Nadel und dreht sich von nun um diese.
 - Wenn das Seil den unteren Bildschirmrand erreicht, ist das Spiel vorbei.
 
-<br><br><br><br>
+### Template des Codes in Codepen
 
 Wir verwenden [dieses Template in Codepen](https://codepen.io/pen?template=bGZrvzg), sodass du direkt im Browser programmieren und dort die hier besprochenen Änderungen am Code eintragen kannst. Klicke dazu [hier](https://codepen.io/pen?template=bGZrvzg).
 
@@ -31,15 +31,20 @@ Es empfiehlt sich, den Editor in Codepen so anzupassen, dass der Code links zu s
 
 ![Codepen](./img/codepen.png)
 
+### Mini-Tutorial
+
+Lass mich erklären, wie du mit diesem Mini-Tutorial arbeitest. Wird der Quellcode auf der rechten Seite des Bildschirms angezeigt? Wenn nicht, scrolle die Seite nach unten, bis dieser Textabschnitt ungefähr in der Mitte des Bildschirms ist.
+
 (src) [0_template.js](./src/0_template.js)
 
-### Vorbereiten des Vorlagen-Quellcodes
+Der neu hinzugefügte Quellcode wird auf der rechten Seite des Bildschirms angezeigt. D
+ie Anzeige ist in einem [vereinheitlichen Format von diff](https://en.wikipedia.org/wi
+ki/Diff#Unified_format), wodurch Unterschiede zwischen Änderungen an Textdateien gegen
+übergestellt werden. Zeilen die ein `+` am Anfang haben, sind hinzugefügte Zeilen, und
+ Zeilen mit `-` sind gelöschte Zeilen. Dadurch kannst du die einzelnen Schritte nachvo
+llziehen, die wir im Laufe dieses Tutorials durchführen werden.
 
-Um ein Spiel mit `crisp-game-lib` zu erstellen, musst du den Vorlagen-Quellcode vorbereiten. Für mehr Informationen siehe [Getting started](https://github.com/abagames/crisp-game-lib#getting-started).
-
-Lass mich erklären, wie du mit diesem Artikel arbeitest. Wird der Quellcode auf der rechten Seite des Bildschirms angezeigt? Wenn nicht, scrolle die Seite nach unten, bis dieser Textabschnitt ungefähr in der Mitte des Bildschirms ist.
-
-Der neu hinzugefügte Quellcode wird auf der rechten Seite des Bildschirms angezeigt. Die Anzeige ist in einem [vereinheitlichen Format von diff](https://en.wikipedia.org/wiki/Diff#Unified_format). Zeilen die ein `+` am Anfang haben, sind hinzugefügte Zeilen, und Zeilen mit `-` sind gelöschte Zeilen.
+Wenn du das oben erwähnte Template in Codepen nutzt, dann ist bereits alles vorbereitet. Alternativ kannst du auch mit einer anderen Umgebung wie z.B. VS Code arbeiten. Um darin ein Spiel mit `crisp-game-lib` zu erstellen, musst du den Vorlagen-Quellcode vorbereiten. Für mehr Informationen siehe [Getting started](https://github.com/abagames/crisp-game-lib#getting-started).
 
 <br>
 
