@@ -21,7 +21,7 @@ function update() {
     nextPinDist = 5;
     cord = { angle: 0, length: cordLength, pin: pins[0] };
   }
-  let scr = difficulty * 0.02;
+  let scroll = difficulty * 0.02;
   if (cord.pin.y < 80) {
     scroll += (80 - cord.pin.y) * 0.1;
   }

@@ -5,7 +5,7 @@
 Dieser Artikel erklärt, wie man ein Ein-Knopf-Mini-Spiel mit der
 JavaScript-Bibliothek [crisp-game-lib](https://github.com/abagames/crisp-game-lib) erstellt.
 
-Die Bezeichnung „Ein-Knopf“ bedeutet, dass das Spiel z.B. nur
+Die Bezeichnung „Ein-Knopf“ bedeutet, dass das Spiel nur
 durch eine einzige Interaktionsmöglichkeit wie z.B. das
 „Drücken“ bzw. „Gedrückt halten“ eines Touch-Displays, Trackpads
 oder Mausbuttons bedienbar ist.
@@ -27,7 +27,7 @@ In dem Spiel, das wir gleich erstellen werden, werden wir die Funktion "stretch"
 
 Wir verwenden [dieses Template in Codepen](https://codepen.io/pen?template=bGZrvzg), sodass du direkt im Browser programmieren und dort die hier besprochenen Änderungen am Code eintragen kannst. Klicke dazu [hier](https://codepen.io/pen?template=bGZrvzg).
 
-Es empfiehlt sich, den Editor in Codepen so anzupassen, dass der Code links zu sehen ist. Auf der rechten Seite wird dann das Spiel angezeigt. Alle Änderungen im Code werden hier ausschließlich in JavaScript programmiert, sodass die HTML- und CSS-Bereiche minimieren kannst. Siehe dazu diesen Screenschot:
+Es empfiehlt sich, den Editor in Codepen so anzupassen, dass der Code links zu sehen ist. Auf der rechten Seite wird dann das Spiel angezeigt. Alle Änderungen im Code werden hier ausschließlich in JavaScript programmiert, sodass du die HTML- und CSS-Bereiche minimieren kannst. Siehe dazu diesen Screenschot:
 
 ![Codepen](./img/codepen.png)
 
@@ -38,28 +38,23 @@ Lass mich erklären, wie du mit diesem Mini-Tutorial arbeitest. Wird der Quellco
 (src) [0_template.js](./src/0_template.js)
 
 Der neu hinzugefügte Quellcode wird auf der rechten Seite des Bildschirms angezeigt. D
-ie Anzeige ist in einem [vereinheitlichen Format von diff](https://en.wikipedia.org/wi
-ki/Diff#Unified_format), wodurch Unterschiede zwischen Änderungen an Textdateien gegen
-übergestellt werden. Zeilen die ein `+` am Anfang haben, sind hinzugefügte Zeilen, und
- Zeilen mit `-` sind gelöschte Zeilen. Dadurch kannst du die einzelnen Schritte nachvo
-llziehen, die wir im Laufe dieses Tutorials durchführen werden.
+ie Anzeige ist in einem [vereinheitlichen Format von diff](https://en.wikipedia.org/wiki/Diff#Unified_format), wodurch Unterschiede zwischen Änderungen an Textdateien gegenübergestellt werden. Zeilen die ein `+` am Anfang haben, sind hinzugefügte Zeilen, und
+Zeilen mit `-` sind gelöschte Zeilen. Dadurch kannst du die einzelnen Schritte nachvollziehen, die wir im Laufe dieses Tutorials durchführen werden.
 
-Wenn du das oben erwähnte Template in Codepen nutzt, dann ist bereits alles vorbereitet. Alternativ kannst du auch mit einer anderen Umgebung wie z.B. VS Code arbeiten. Um darin ein Spiel mit `crisp-game-lib` zu erstellen, musst du den Vorlagen-Quellcode vorbereiten. Für mehr Informationen siehe [Getting started](https://github.com/abagames/crisp-game-lib#getting-started).
+Wenn du das oben erwähnte Template in Codepen nutzt, dann ist bereits alles vorbereitet. Alternativ kannst du auch mit einer anderen Umgebung wie z.B. VS Code arbeiten. Um darin ein Spiel mit `crisp-game-lib` zu erstellen, musst du den Vorlagen-Quellcode vorbereiten. Für mehr Informationen siehe [Getting started](https://github.com/abagames/crisp-game-lib#getting-started) im README von `crisp-game-lib`.
 
-<br>
+### Starten des Tutorials
 
 Schau dir die Vorlage rechts oben auf dem Bildschirms an. `title` ,`description`, `characters` und `options` sind (globale) Variablen.
-Mit `title` wird der Titel des Spiels bestimmt und `description` ist ein möglicherweise mehrzeiliger Template-String für die Beschreibung des Spiels, die z.B. die Bedienung erklärt. `characters` definieren die auf dem Bildschirm angezeigte Pixelkunst (z.B. Spielfiguren) als Array und `options` ist ein JavaScript-Object, um die Spieleinstellungen festzulegen. Diese Variablen werden wir später festlegen. Siehe die `crisp-game-lib`-Referenz von [char()](https://abagames.github.io/crisp-game-lib/ref_document/functions/char.html) und [Options](https://abagames.github.io/crisp-game-lib/ref_document/types/Options.html) für weitere Informationen.
+Mit `title` wird der Titel des Spiels bestimmt und `description` ist ein möglicherweise mehrzeiliger Template-String für die Beschreibung des Spiels, die z.B. die Bedienung erklärt. `characters` definieren die auf dem Bildschirm angezeigte Pixelkunst (z.B. Spielfiguren) als Array und `options` ist ein JavaScript-Object, um die Spieleinstellungen festzulegen. Diese Variablen werden wir später festlegen, wobei wir `characters` nicht benötigen werden. Zu allen hier erwähnten Funktionen gibt es mehr Informationen in der `crisp-game-lib`-Referenz (siehe z.B. [Options](https://abagames.github.io/crisp-game-lib/ref_document/types/Options.html) für die `options`-Variable).
 
 Die `update` Funktion beschreibt die Logik des Spiels und muss von uns definiert werden. Die `update` Funktion wird von `crisp-game-lib` automatisch 60-mal pro Sekunde aufgerufen, um den Spielbildschirm zu zeichnen, auf Mausoperationen zu reagieren, usw.
 
-Die zur Laufzeit von `crisp-game-lib` bereitgestellte Variable `ticks` in der `update` Funktion ist `0`, wenn das Spiel startet. `ticks` wird automatisch in jedem Funktionsaufruf von `update` (alle 1/60 Sekunden) um eins erhöht. Die Anweisung `if (!ticks) {}`ist gleichbedeutend mit`if (ticks === 0) {}`. Die Initialisierungsprozedur zu Spielbeginn kann im `if`-Rumpf `{}` durchgeführt werden.
-
-<br><br><br><br>
-
-(src) [1_pins_variable.js](./src/1_pins_variable.js)
+Die zur Laufzeit von `crisp-game-lib` bereitgestellte Variable `ticks` in der `update` Funktion ist `0`, wenn das Spiel startet. `ticks` wird automatisch in jedem Funktionsaufruf von `update` (alle 1/60 Sekunden) um eins erhöht. Die Anweisung `if (!ticks) {}`ist gleichbedeutend mit`if (ticks === 0) {}`. Die einmal ausgeführte Initialisierung zu Spielbeginn kann somit im `if`-Rumpf `{}` durchgeführt werden.
 
 ### Nadeln anzeigen
+
+(src) [1_pins_variable.js](./src/1_pins_variable.js)
 
 Deklariere eine Variable `pins` außerhalb der `update`-Funktion.
 Beim ersten Aufruf von `update` wird `pins` im Rumpf der `if`-Bedingung ein Array mit einem Vektor-Element zugewiesen:
@@ -68,27 +63,23 @@ Beim ersten Aufruf von `update` wird `pins` im Rumpf der `if`-Bedingung ein Arra
 pins = [vec(50, 5)];
 ```
 
-`pins` („Nadeln“ auf Englisch) ist ein Array, das später die Koordinaten aller auf dem Bildschirm sichtbaren Nadeln enthalten wird.
+`pins` („Nadeln“ im Deutschen) ist ein Array, das später die Koordinaten aller auf dem Bildschirm sichtbaren Nadeln enthalten wird.
 
 Die `vec()` Funktion erstellt eine [Vector](https://abagames.github.io/crisp-game-lib/ref_document/classes/Vector.html) Instanz mit der x-Koordinate (hier `50`) als erstem Argument und der y-Koordinate als zweitem (hier `5`). Neben `vec` werden wir einige weitere Funktionen von `crisp-game-lib` verwenden.
 
-Die Array-Funktion `forEach` wird verwendet, um mit den Koordinaten jedes Elements in `pins` eine [Box](https://abagames.github.io/crisp-game-lib/ref_document/functions/box.html) zu zeichnen. Zu Beginn des Spiels ist dies erste eine Box und bei späteren Aufrufen von `update` werden weitere hinzukommen.
+Die Array-Funktion `forEach` von JavaScript wird verwendet, um mit den Koordinaten jedes Vektors in `pins` eine [Box](https://abagames.github.io/crisp-game-lib/ref_document/functions/box.html) zu zeichnen. Zu Beginn des Spiels ist dies erste eine Box und bei späteren Aufrufen von `update` werden weitere hinzukommen.
 
-Die `box` Funktion nimmt Koordinaten als erstes Argument (hier ein `Vector`) und seine Größe als zweites Argument (`3`). Der `crisp-game-lib` Bildschirm besteht aus 100x100 Punkten, mit (0,0) oben links und (99,99) unten rechts, sodass das Kästchen (`Box`) horizontal in der Mitte (`50`) und vertikal an der oberen Kante (`5`) erscheint.
+Die `box` Funktion nimmt Koordinaten als erstes Argument (hier ein Vektor `p`) und seine Größe als zweites Argument (`3`). Der `crisp-game-lib`-Bildschirm besteht aus 100x100 Punkten, mit (0,0) oben links und (99,99) unten rechts, sodass das Kästchen (`Box`) horizontal in der Mitte (`50`) und vertikal an der oberen Kante (`5`) erscheint.
 
-Ein Box wird in diesem Spiel als „Nadel“ aufgefasst, an der das „Seil“ befestigt werden kann.
-
-<br><br><br><br>
-
-(src_silent) 1a_pins_variable.js
-
-(src) [2_add_pins.js](./src/2_add_pins.js)
+Ein Box wird in diesem Spiel als „Nadel“ (`pin`) aufgefasst, an der das „Seil“ befestigt werden kann.
 
 ### Nadeln hinzufügen und nach unten scrollen
 
-Lasse Nadeln (d.h. `Box`-Elemente) von der oberen Kante des Bildschirms in einem bestimmten Intervall erscheinen und nach unten scrollen. Initialisiere dazu die `nextPinDist` Variable auf die Distanz zur nächsten Nadel, damit es zwischen deren Erscheinen einen zeitlich Abstand gibt (dies geschieht beim ersten Durchlauf mit dem Wert `5`).
+(src) [2_add_pins.js](./src/2_add_pins.js)
 
-Lege die Distanz in y-Richtung, die automatisch bei jedem Durchlauf bzw. Aufruf von `update` gescrollt werden soll, in der `scroll` Variable (`0.02`). Füge den Wert von `scroll` zur y-Koordinate jeder Nadel hinzu (dies geschieht im `forEach-Aufruf`). Zu Beginn haben wir nur eine Nadel. Als nächstes sorgen wir dafür, dass weitere Nadeln mit etwas Abstand erscheinen.
+Lasse Nadeln (d.h. `Box`-Elemente) von der oberen Kante des Bildschirms in einem bestimmten Intervall erscheinen und nach unten scrollen. Deklariere dazu die Variable `nextPinDist` nach `pins` und initialisiere sie mit der Distanz zur nächsten Nadel, damit es zwischen deren Erscheinen einen zeitlich Abstand gibt (dies geschieht beim ersten Durchlauf in der Initialisierung mit dem Wert `5`).
+
+Lege die Distanz in y-Richtung, die automatisch bei jedem Durchlauf bzw. Aufruf von `update` gescrollt werden soll, in der `scroll` Variable (`0.02`) fest. Füge den Wert von `scroll` zur y-Koordinate jeder Nadel hinzu (dies geschieht im `forEach`-Aufruf beim Durchlauf der Elemente in `pins`). Zu Beginn haben wir nur eine Nadel. Gleich sorgen wir dafür, dass weitere Nadeln mit etwas Abstand erscheinen.
 
 Zunächst wird in jedem Durchlauf bzw. Aufruf von `update` der Wert von `nextPinDist` mit dem zuvor festgelegten `scroll`-Betrag verringert:
 
@@ -102,7 +93,7 @@ Sobald in einem Durchlauf `nextPinDist` kleiner als 0 ist, füge eine neue Nadel
 pins.push(vec(rnd(10, 90), -2 - nextPinDist));
 ```
 
-Die x-Koordinate der neuen Nadel wird zufällig zwischen 10 und 90 gesetzt, d.h. mit etwas Abstand zum Rand der Spielfläche von 100x100. Dies geschieht mit der Funktion [rnd](https://abagames.github.io/crisp-game-lib/ref_document/functions/rnd.html) in `vec(rnd(10, 90))`. Die `rnd`-Funktion gibt einen Wert zwischen dem ersten und dem zweiten Argument zurück. Die y-Koordinate der neuen Nadel erhält den Wert `-2 - nextPinDist`, um den Abstand zum oberen Bildschirmrand zu variieren, was durch die nächste Zeile zusätzlich randomisiert wird:
+Die x-Koordinate der neuen Nadel wird zufällig zwischen 10 und 90 gesetzt, d.h. mit etwas Abstand zum Rand der Spielfläche von 100x100. Dies geschieht mit der Funktion [rnd](https://abagames.github.io/crisp-game-lib/ref_document/functions/rnd.html) im Ausdruck `vec(rnd(10, 90))`. Die `rnd`-Funktion gibt einen Wert zwischen dem ersten und dem zweiten Argument zurück. Die y-Koordinate der neuen Nadel erhält den Wert `-2 - nextPinDist`, um den Abstand zum oberen Bildschirmrand zu variieren, was durch die nächste Zeile zusätzlich randomisiert wird:
 
 ```
 nextPinDist += rnd(5, 15);
@@ -110,13 +101,11 @@ nextPinDist += rnd(5, 15);
 
 Die Distanz zur nächsten Nadel wird somit ebenfalls mit der `rnd` Funktion berechnet und zum aktuellen Wert von `nextPinDist` addiert.
 
-<br><br><br><br>
+### Eine Nadel löschen, die außerhalb des Bildschirms ist
 
 (src) [3_remove_pins.js](./src/3_remove_pins.js)
 
-### Eine Nadel löschen, die außerhalb des Bildschirms ist
-
-Wenn du eine Nadel, die außerhalb des Bildschirms gescrollt ist, nicht entfernst, bleibt sie für immer im `pins`-Array. Verwende anstelle von `forEach` die Funktion [remove](https://abagames.github.io/crisp-game-lib/ref_document/functions/remove.html), um die Nadeln außerhalb des Bildschirms zu entfernen.
+Wenn du eine Nadel, die außerhalb des Bildschirms gescrollt ist, nicht entfernst, bleibt sie für immer im `pins`-Array. Verwende anstelle von `forEach` die `crisp-game-lib`-Funktion [remove](https://abagames.github.io/crisp-game-lib/ref_document/functions/remove.html), um die Nadeln außerhalb des Bildschirms zu entfernen.
 
 Die `remove` Funktion nimmt als erstes Argument ein Array und als zweites Argument eine Funktion. Die Funktion wird automatisch für jedes Element des Arrays aufgerufen und erhält dabei das aktuelle Element als Argument. Wenn die Funktion `true` zurückgibt, wird dieses Element aus dem Array entfernt. Die Nadel wird entfernt, indem `true` von der Funktion zurückgegeben wird, wenn diese außerhalb des Bildschirms ist („y-Koordinate der Nadel > 102“):
 
@@ -124,21 +113,17 @@ Die `remove` Funktion nimmt als erstes Argument ein Array und als zweites Argume
 return p.y > 102;
 ```
 
-<br><br><br><br>
+### Ein Seil hinzufügen
 
 (src) [4_add_cord.js](./src/4_add_cord.js)
-
-### Ein Seil hinzufügen
 
 Die `cord` Variable verwaltet das Seil. Wie `pin` und `nextPinDist` wird `cord` außerhalb von `update` deklariert, damit der aktuelle Wert in nachfolgenden Aufrufen von `update` erhalten bleibt. Definiere dort ebenso eine Konstante für die Länge des Seils namens `cordLength` mit Wert `7`.
 
 Das `cord`-Objekt wird in `if (!ticks) {}` initialisiert und hat Eigenschaften für den Winkel (`angle`), die Länge (`length`) und die Nadel (`pin`) zur Befestigung des Seils.
 
-<br><br><br><br>
+### Ein Seil zeichnen
 
 (src) [5_draw_cord.js](./src/5_draw_cord.js)
-
-### Ein Seil zeichnen
 
 Der Winkel des Seils wird in jedem `update`-Aufruf um den Wert `0.05` erhöht, damit sich das Seil im Uhrzeigersinn dreht:
 
@@ -160,11 +145,9 @@ vec(cord.pin).addWithAngle(cord.angle, cord.length)
 
 Die Funktion `addWithAngle` von `Vector` verschiebt die Koordinaten in Richtung des Winkels des ersten Arguments um die Entfernung des zweiten Arguments. Hierdurch erhält das Seil seine geradlinige Ausdehnung.
 
-<br><br><br><br>
+### Das Seil dehnt sich, wenn ein Knopf gedrückt wird
 
 (src) [6_extend_cord.js](./src/6_extend_cord.js)
-
-### Das Seil dehnt sich, wenn ein Knopf gedrückt wird
 
 `crisp-game-lib` stellt eine Variable [input](https://abagames.github.io/crisp-game-lib/ref_document/modules/input.html) zur Verfügung, die zur Laufzeit (d.h. in jedem Aufruf von `update`) den Eingabezustand von Maus, Touchscreen oder Tastatur enthält. Die `input.isPressed` Variable ist `true`, wenn ein Mausbutton, Touchscreen oder eine Taste gedrückt wird.
 
@@ -180,87 +163,69 @@ if (input.isPressed) {
 }
 ```
 
-<br><br><br><br>
+### Scrollen gemäß der Position des Seils
 
 (src) [7_scroll_cord.js](./src/7_scroll_cord.js)
-
-### Scrollen gemäß der Position des Seils
 
 Nadeln scrollen von oben auf dem Bildschirm nach unten, daher ist es schwierig zu sehen, was jenseits des Bildschirms passiert, wenn das Seil oben ist. Deshalb wird, wenn die y-Koordinate der Nadel, an der das Seil hängt, weniger als 80 ist, die Scroll-Distanz erhöht.
 
 Wir fügen auch einen Vorgang hinzu, um das Spiel zu beenden, wenn das Seil den unteren Bildschirmrand erreicht. Durch Aufrufen der [end](https://abagames.github.io/crisp-game-lib/ref_document/functions/end.html) Funktion wird das Spiel in den Game-Over-Zustand übergehen.
 
-<br><br><br><br>
+### Das Seil bewegt sich zu einer anderen Nadel
 
 (src) [8_move_to_pin.js](./src/8_move_to_pin.js)
 
-### Das Seil bewegt sich zu einer anderen Nadel
-
 Ergänze den Code so, dass das Seil zu einer anderen Nadel wechselt, wenn es mit dieser kollidiert.
 
-Um eine [Collision](https://abagames.github.io/crisp-game-lib/ref_document/types/Collision.html) zu detektieren, verwende den Rückgabewert der `box` Funktion. Indem überprüft wird, ob `isColliding.rect.black` `true` ist, kann getestet werden, ob das Kästchen mit einem schwarzen Rechteck kollidiert. Die `line` Funktion, die zum Zeichnen eines Seils verwendet wird, zeichnet eine Linie, die aus mehreren Rechtecken besteht. Daher kann durch diesen Test festgestellt werden, ob die gezeichneten Nadeln mit dem Seil kollidieren.
+Um eine [Collision](https://abagames.github.io/crisp-game-lib/ref_document/types/Collision.html) zu detektieren, verwende den Rückgabewert der `box` Funktion. Indem überprüft wird, ob `isColliding.rect.black` den Wert `true` hat, kann getestet werden, ob das Kästchen mit einem schwarzen Rechteck kollidiert. Die `line` Funktion, die zum Zeichnen eines Seils verwendet wird, zeichnet eine Linie, die aus mehreren Rechtecken besteht. Daher kann durch diesen Test festgestellt werden, ob die gezeichneten Nadeln mit dem Seil kollidieren.
 
-Zeichenfunktionen außer der `box` Funktion können ebenfalls überprüfen, ob sie mit einem anderen Quadrat kollidieren, indem `isColliding` auf dieselbe Weise überprüft wird.
-
-Die Nadel, die mit dem Seil kollidiert, wird in der `nextPin` Variablen gespeichert. Wenn `nextPin` nicht `null` ist, bewege das Seil zu `nextPin` und kehre die Seillänge zum anfänglichen Wert `cordLength` zurück.
-
-<br><br><br><br>
-
-(src) [9_add_score.js](./src/9_add_score.js)
+Die Nadel, die mit dem Seil kollidiert, wird in der `nextPin` Variablen gespeichert. Wenn `nextPin` nicht `null` ist, bewege das Seil zu `nextPin` und setze die Seillänge auf den anfänglichen Wert `cordLength` zurück.
 
 ### Punkte hinzufügen
 
-Es ist erforderlich, die Punkte korrekt gemäß der Geschicklichkeit des Spielers zu addieren, damit das Mini-Spiel sinnvoll ist. In diesem Beispiel addieren wir, wenn ein Seil sich zu einer anderen Nadel bewegt, die Bewegungsdistanz zur Punktzahl. Die Bewegungsdistanz wird mit der `distanceTo` Funktion der `Vector` Klasse berechnet.
+(src) [9_add_score.js](./src/9_add_score.js)
 
-Das erste Argument der [addScore](https://abagames.github.io/crisp-game-lib/ref_document/functions/addScore.html) Funktion ist die hinzuzufügende Punktzahl. Wenn du als zweites Argument eine Koordinate gibst, wird die hinzugefügte Punktzahl an dieser Koordinate angezeigt. Das zweite Argument ist optional und die Punktzahl wird nicht angezeigt, wenn sie weggelassen wird.
+Dieses Spiel soll nun mit Punkten erweitert werden. Hier addieren wir Punkte, nämlich die Bewegungsdistanz, wenn sich das Seil zu einer anderen Nadel bewegt. Die Bewegungsdistanz wird mit der `distanceTo` Funktion der `Vector` Klasse berechnet.
 
-Außerdem wird ein Soundeffekt entsprechend zum Punkteaddieren abgespielt. Verwende die [play](https://abagames.github.io/crisp-game-lib/ref_document/functions/play.html) Funktion, um den Sound abzuspielen. Das erste Argument der `play` Funktion legt die Art des Soundeffektes fest. Es gibt mehrere Arten von Soundeffekten, wie `coin`, `select`, `hit`, `explosion`, `laser`, `jump` und so weiter, zusätzlich zum hier spezifizierten `powerUp`.
+Das erste Argument der [addScore](https://abagames.github.io/crisp-game-lib/ref_document/functions/addScore.html) Funktion ist die hinzuzufügende Punktzahl. Wenn das zweite Argument eine Koordinate ist, wird die hinzugefügte Punktzahl an dieser Koordinate angezeigt. Das zweite Argument ist optional und die Punktzahl wird nicht angezeigt, wenn sie weggelassen wird.
 
-<br><br><br><br>
-
-(src) [10_play_ses.js](./src/10_play_ses.js)
+Außerdem wird ein Soundeffekt entsprechend zum Punkteaddieren abgespielt. Verwende die [play](https://abagames.github.io/crisp-game-lib/ref_document/functions/play.html) Funktion, um den Sound abzuspielen. Das erste Argument der `play` Funktion legt die Art des Soundeffektes fest. Es gibt mehrere Arten von Soundeffekten, wie `coin`, `select`, `hit`, `explosion`, `laser`, `jump` und so weiter, zusätzlich zum hier angegebenen `powerUp`.
 
 ### Weitere Soundeffekte hinzufügen
 
-Zusätzlich zu den Bewegungen des Seils kannst Du auch andere Soundeffekte abspielen. Der `select` Sound wird im Moment des Knopfdrucks abgespielt. Du kannst feststellen, wann ein Knopf gedrückt wird, indem Du überprüfst, ob `input.isJustPressed` `true` ist. Es wird auch ein `explosion` Sound abgespielt, wenn das Spiel vorbei ist.
+(src) [10_play_ses.js](./src/10_play_ses.js)
 
-<br><br><br><br>
-
-(src) [11_adjust_difficulty.js](./src/11_adjust_difficulty.js)
+Zusätzlich zu den Bewegungen des Seils kannst du auch andere Soundeffekte abspielen. Der `select` Sound wird im Moment des Knopfdrucks abgespielt. Du kannst feststellen, wann ein Knopf gedrückt wird, indem du überprüfst, ob `input.isJustPressed` `true` ist. Es wird nun auch ein `explosion` Sound abgespielt, wenn das Spiel vorbei ist.
 
 ### Das Spiel schrittweise schwieriger machen
 
-In Mini-Spielen ist es wichtig, das Spiel im Laufe der Zeit schrittweise schwieriger zu machen und dadurch Spannung für die Spieler zu erzeugen. Eine ausgezeichnete Methode, Spiele schwieriger zu machen, ist es, die Spielgeschwindigkeit zu erhöhen.
+(src) [11_adjust_difficulty.js](./src/11_adjust_difficulty.js)
 
-Die `difficulty` Variable kann zur Anpassung der Schwierigkeit des Spiels verwendet werden. Die `difficulty` Variable ist zu Beginn des Spiels eins, nach 1 Minute zwei und erhöht sich jede weitere Minute um eins. `difficulty` wird im Quellcode referenziert, um verschiedene Aktionen zu beschleunigen.
+In Mini-Spielen ist es wichtig, das Spiel im Laufe der Zeit schrittweise schwieriger zu machen und dadurch Spannung für die Spieler zu erzeugen. Eine bewährte Methode, Spiele schwieriger zu machen, ist es, die Spielgeschwindigkeit zu erhöhen.
 
-Die Scrollgeschwindigkeit, die Dehnungsgeschwindigkeit des Seils und die Drehgeschwindigkeit des Seils erhöhen sich allmählich.
+Die `difficulty` Variable kann zur Anpassung der Schwierigkeit des Spiels verwendet werden. Die `difficulty` Variable ist zu Beginn des Spiels eins, nach einer Minute zwei und erhöht sich jede weitere Minute um eins. Dies geschieht automatisch in `crisp-game-lib`. Im Code wird `difficulty` nun eingesetzt, um verschiedene Aktionen zu beschleunigen.
 
-Somit ist der Quellcode des Spiels vollständig.
+Die Scrollgeschwindigkeit, die Dehnungsgeschwindigkeit des Seils und die Drehgeschwindigkeit des Seils erhöhen sich allmählich somit.
 
-<br><br><br><br>
-
-(src) [12_set_options.js](./src/12_set_options.js)
+Somit ist der Quellcode für die Logik des Spiels bereits vollständig.
 
 ### Titel, Beschreibung und Optionen einstellen
 
-Wenn du einen Titel ( `title` ) und eine Beschreibung ( `description` ) für dein Spiel festlegst, werden diese Texte auf dem Titelbildschirm vor dem Spielstart angezeigt. Du kannst auch Optionen mit `options` setzen. Hier kannst du das Abspielen von Hintergrundmusik ( `isPlayingBgm` ) aktivieren.
+(src) [12_set_options.js](./src/12_set_options.js)
 
-<br><br><br><br>
-
-(src) [13_change_sound.js](./src/13_change_sound.js)
+Wenn du einen Titel (`title`) und eine Beschreibung (`description`) für dein Spiel festlegst, werden diese Texte auf dem Titelbildschirm vor dem Spielstart angezeigt. Du kannst auch Optionen mit `options` setzen. Hier kannst du das Abspielen von Hintergrundmusik (`isPlayingBgm`) aktivieren.
 
 ### Den Sound anpassen
 
+(src) [13_change_sound.js](./src/13_change_sound.js)
+
 Wenn `isPlayingBgm` aktiviert ist, wird während des Spiels automatisch Hintergrundmusik generiert und abgespielt. Auch die Soundeffekte, die von der `play` Funktion abgespielt werden, werden automatisch erzeugt. Diese Sounds können geändert werden, indem `seed` in den `options` eingestellt wird. Du kannst unterschiedliche Werte für `seed` setzen, bis du die Hintergrundmusik und Soundeffekte findest, die dir gefallen.
-
-<br><br><br><br>
-
-(src) [99_completed.js](./src/99_completed.js)
 
 ### Fertig!
 
-Jetzt sind wir fertig. Es gibt [noch viele weitere Spiele](http://www.asahi-net.or.jp/~cs8k-cyu/browser.html), die `crisp-game-lib` verwenden. Alle Quellcodes sind als [Beispielcodes](https://github.com/abagames/crisp-game-lib-games/tree/main/docs) verfügbar.
+(src) [99_completed.js](./src/99_completed.js)
+
+Jetzt sind wir fertig. Es gibt [noch viele weitere Spiele](http://www.asahi-net.or.jp/~cs8k-cyu/browser.html), die `crisp-game-lib` verwenden. Einige Quellcodes sind als [Beispielcodes](https://github.com/abagames/crisp-game-lib-11-games/tree/main/docs) verfügbar.
 
 Der finale Quellcode ist wie folgt:
 
