@@ -73,11 +73,13 @@ Die `box` Funktion nimmt Koordinaten als erstes Argument (hier ein Vektor `p`) u
 
 Ein Box wird in diesem Spiel als „Nadel“ (`pin`) aufgefasst, an der das „Seil“ befestigt werden kann.
 
+**Hinweis:** Um die Auswirkungen der Änderungen am Code im Spiel zu sehen, muss du das Spiel durch ein Antippen oder Mausklick auf die Spielfläche starten. Wenn du das Spiel beendest, kannst du es durch erneutes Antippen oder Mausklick auf die Spielfläche neu starten.
+
 ### Nadeln hinzufügen und nach unten scrollen
 
 (src) [2_add_pins.js](./src/2_add_pins.js)
 
-Lasse Nadeln (d.h. `Box`-Elemente) von der oberen Kante des Bildschirms in einem bestimmten Intervall erscheinen und nach unten scrollen. Deklariere dazu die Variable `nextPinDist` nach `pins` und initialisiere sie mit der Distanz zur nächsten Nadel, damit es zwischen deren Erscheinen einen zeitlich Abstand gibt (dies geschieht beim ersten Durchlauf in der Initialisierung mit dem Wert `5`).
+Lasse Nadeln (d.h. `Box`-Elemente) von der oberen Kante des Bildschirms in einem bestimmten Intervall erscheinen und nach unten scrollen. Deklariere dazu die Variable `nextPinDist` direkt in der Zeile unter der Deklaration von `pins` und initialisiere sie im `if`-Block mit der Distanz zur nächsten Nadel, damit es zwischen deren Erscheinen einen zeitlich Abstand gibt (dies geschieht beim ersten Durchlauf von `update` in der Initialisierung mit dem Wert `5`).
 
 Lege die Distanz in y-Richtung, die automatisch bei jedem Durchlauf bzw. Aufruf von `update` gescrollt werden soll, in der `scroll` Variable (`0.02`) fest. Füge den Wert von `scroll` zur y-Koordinate jeder Nadel hinzu (dies geschieht im `forEach`-Aufruf beim Durchlauf der Elemente in `pins`). Zu Beginn haben wir nur eine Nadel. Gleich sorgen wir dafür, dass weitere Nadeln mit etwas Abstand erscheinen.
 
@@ -90,10 +92,10 @@ nextPinDist -= scroll;
 Sobald in einem Durchlauf `nextPinDist` kleiner als 0 ist, füge eine neue Nadel mit der `push` Funktion dem `pins`-Array hinzu:
 
 ```
-pins.push(vec(rnd(10, 90), -2 - nextPinDist));
+pins.push(vec(rnd(10, 90), 0));
 ```
 
-Die x-Koordinate der neuen Nadel wird zufällig zwischen 10 und 90 gesetzt, d.h. mit etwas Abstand zum Rand der Spielfläche von 100x100. Dies geschieht mit der Funktion [rnd](https://abagames.github.io/crisp-game-lib/ref_document/functions/rnd.html) im Ausdruck `vec(rnd(10, 90))`. Die `rnd`-Funktion gibt einen Wert zwischen dem ersten und dem zweiten Argument zurück. Die y-Koordinate der neuen Nadel erhält den Wert `-2 - nextPinDist`, um den Abstand zum oberen Bildschirmrand zu variieren, was durch die nächste Zeile zusätzlich randomisiert wird:
+Die x-Koordinate der neuen Nadel wird zufällig zwischen 10 und 90 gesetzt, d.h. mit etwas Abstand zum seitlichen Rand der Spielfläche von 100x100. Dies geschieht mit der Funktion [rnd](https://abagames.github.io/crisp-game-lib/ref_document/functions/rnd.html) im Ausdruck `vec(rnd(10, 90))`. Die `rnd`-Funktion gibt einen Wert zwischen dem ersten und dem zweiten Argument zurück. Die y-Koordinate der neuen Nadel erhält den Wert `0` für den oberen Bildschirmrand. Die nächste Zeile randomisiert zusätzlich den Abstand zur nächsten Nadel:
 
 ```
 nextPinDist += rnd(5, 15);
@@ -120,6 +122,8 @@ return p.y > 102;
 Die `cord` Variable verwaltet das Seil. Wie `pin` und `nextPinDist` wird `cord` außerhalb von `update` deklariert, damit der aktuelle Wert in nachfolgenden Aufrufen von `update` erhalten bleibt. Definiere dort ebenso eine Konstante für die Länge des Seils namens `cordLength` mit Wert `7`.
 
 Das `cord`-Objekt wird in `if (!ticks) {}` initialisiert und hat Eigenschaften für den Winkel (`angle`), die Länge (`length`) und die Nadel (`pin`) zur Befestigung des Seils.
+
+Das Seil wird durch die Änderungen im nächsten Schritt sichtbar.
 
 ### Ein Seil zeichnen
 
@@ -167,7 +171,15 @@ if (input.isPressed) {
 
 (src) [7_scroll_cord.js](./src/7_scroll_cord.js)
 
-Nadeln scrollen von oben auf dem Bildschirm nach unten, daher ist es schwierig zu sehen, was jenseits des Bildschirms passiert, wenn das Seil oben ist. Deshalb wird, wenn die y-Koordinate der Nadel, an der das Seil hängt, weniger als 80 ist, die Scroll-Distanz erhöht.
+Nadeln scrollen von oben auf dem Bildschirm nach unten, daher ist es schwierig zu sehen, was jenseits des Bildschirms passiert, wenn das Seil oben ist. Sollte das Seil in der Nähe der oberen Kante des Bildschirms sein, wird die Scrollgeschwindigkeit erhöht, um das Seil schneller nach unten zu bewegen &mdash; bis es sich in der unteren Hälfte des Bildschirms befindet:
+
+```js
+if (cord.pin.y < 80) {
+  scroll += (80 - cord.pin.y) * 0.1;
+}
+```
+
+**Tipp:** Verändere den Wert von `0.1` und beobachte, wie sich dies auf die Scrollgeschwindigkeit auswirkt. Somit lässt sich der Code besser nachvollziehen.
 
 Wir fügen auch einen Vorgang hinzu, um das Spiel zu beenden, wenn das Seil den unteren Bildschirmrand erreicht. Durch Aufrufen der [end](https://abagames.github.io/crisp-game-lib/ref_document/functions/end.html) Funktion wird das Spiel in den Game-Over-Zustand übergehen.
 
@@ -175,9 +187,18 @@ Wir fügen auch einen Vorgang hinzu, um das Spiel zu beenden, wenn das Seil den 
 
 (src) [8_move_to_pin.js](./src/8_move_to_pin.js)
 
-Ergänze den Code so, dass das Seil zu einer anderen Nadel wechselt, wenn es mit dieser kollidiert.
+Ergänze den Code so, dass das Seil zu einer anderen Nadel wechselt, wenn es mit dieser kollidiert. Dazu benötigen wir zunächst eine neue Variable `nextPin`
+innerhalb von `update`.
 
 Um eine [Collision](https://abagames.github.io/crisp-game-lib/ref_document/types/Collision.html) zu detektieren, verwende den Rückgabewert der `box` Funktion. Indem überprüft wird, ob `isColliding.rect.black` den Wert `true` hat, kann getestet werden, ob das Kästchen mit einem schwarzen Rechteck kollidiert. Die `line` Funktion, die zum Zeichnen eines Seils verwendet wird, zeichnet eine Linie, die aus mehreren Rechtecken besteht. Daher kann durch diesen Test festgestellt werden, ob die gezeichneten Nadeln mit dem Seil kollidieren.
+
+Ersetze also `box(p, 3)` mit diesem Kollisions-Test:
+
+```js
+if (box(p, 3).isColliding.rect.black && p !== cord.pin) {
+  nextPin = p;
+}
+```
 
 Die Nadel, die mit dem Seil kollidiert, wird in der `nextPin` Variablen gespeichert. Wenn `nextPin` nicht `null` ist, bewege das Seil zu `nextPin` und setze die Seillänge auf den anfänglichen Wert `cordLength` zurück.
 
@@ -196,6 +217,12 @@ Außerdem wird ein Soundeffekt entsprechend zum Punkteaddieren abgespielt. Verwe
 (src) [10_play_ses.js](./src/10_play_ses.js)
 
 Zusätzlich zu den Bewegungen des Seils kannst du auch andere Soundeffekte abspielen. Der `select` Sound wird im Moment des Knopfdrucks abgespielt. Du kannst feststellen, wann ein Knopf gedrückt wird, indem du überprüfst, ob `input.isJustPressed` `true` ist. Es wird nun auch ein `explosion` Sound abgespielt, wenn das Spiel vorbei ist.
+
+Die letzten beiden Änderungen waren nur kleine Anpassungen im Code, aber sie machen das Spiel viel interessanter. Wenn du das Spiel jetzt spielst, kannst du die Soundeffekte hören.
+
+Inzwischen haben wir die grundlegende Logik des Spiels fertiggestellt. Für ein besseres Verständnis könnte es sinnvoll sein, den Aufbau des Codes in Ruhe nachzuvollziehen.
+
+Als nächstes werden wir das Spiel schrittweise schwieriger machen.
 
 ### Das Spiel schrittweise schwieriger machen
 
@@ -288,7 +315,7 @@ function update() {
   }
   nextPinDist -= scroll;
   while (nextPinDist < 0) {
-    pins.push(vec(rnd(10, 90), -2 - nextPinDist));
+    pins.push(vec(rnd(10, 90), 0));
     nextPinDist += rnd(5, 15);
   }
 }

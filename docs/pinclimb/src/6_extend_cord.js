@@ -33,7 +33,7 @@ function update() {
   });
   nextPinDist -= scroll;
   while (nextPinDist < 0) {
-    pins.push(vec(rnd(10, 90), -2 - nextPinDist));
+    pins.push(vec(rnd(10, 90), 0));
     nextPinDist += rnd(5, 15);
   }
 }
