@@ -75,13 +75,19 @@ Ein Box wird in diesem Spiel als „Nadel“ (`pin`) aufgefasst, an der das „S
 
 **Hinweis:** Um die Auswirkungen der Änderungen am Code im Spiel zu sehen, muss du das Spiel durch ein Antippen oder Mausklick auf die Spielfläche starten. Wenn du das Spiel beendest, kannst du es durch erneutes Antippen oder Mausklick auf die Spielfläche neu starten.
 
-### Nadeln hinzufügen und nach unten scrollen
+## Nadeln nach unten scrollen lassen
+
+(src) [1b_scroll_pins.js](./src/1b_scroll_pins.js)
+
+Lege die Distanz in y-Richtung, die automatisch bei jedem Durchlauf bzw. Aufruf von `update` gescrollt werden soll, in der `scroll` Variable fest. Hier bestimmen wir die Scroll-Geschwindigkeit mit `0.02`. Wenn du diesen Wert erhöhst, dann bewegen sich die Nadeln schneller nach unten (probiere es aus!).
+
+Füge den Wert von `scroll` zur y-Koordinate jeder Nadel hinzu (dies geschieht im `forEach`-Aufruf beim Durchlauf der Elemente in `pins`). Zu Beginn haben wir nur eine Nadel. Gleich sorgen wir dafür, dass weitere Nadeln mit etwas Abstand erscheinen.
+
+### Nadeln hinzufügen
 
 (src) [2_add_pins.js](./src/2_add_pins.js)
 
-Lasse Nadeln (d.h. `Box`-Elemente) von der oberen Kante des Bildschirms in einem bestimmten Intervall erscheinen und nach unten scrollen. Deklariere dazu die Variable `nextPinDist` direkt in der Zeile unter der Deklaration von `pins` und initialisiere sie im `if`-Block mit der Distanz zur nächsten Nadel, damit es zwischen deren Erscheinen einen zeitlich Abstand gibt (dies geschieht beim ersten Durchlauf von `update` in der Initialisierung mit dem Wert `5`).
-
-Lege die Distanz in y-Richtung, die automatisch bei jedem Durchlauf bzw. Aufruf von `update` gescrollt werden soll, in der `scroll` Variable (`0.02`) fest. Füge den Wert von `scroll` zur y-Koordinate jeder Nadel hinzu (dies geschieht im `forEach`-Aufruf beim Durchlauf der Elemente in `pins`). Zu Beginn haben wir nur eine Nadel. Gleich sorgen wir dafür, dass weitere Nadeln mit etwas Abstand erscheinen.
+Lasse weitere Nadeln (d.h. `Box`-Elemente) von der oberen Kante des Bildschirms in einem bestimmten Intervall erscheinen. Deklariere dazu die Variable `nextPinDist` direkt in der Zeile unter der Deklaration von `pins` und initialisiere sie im `if`-Block mit der Distanz zur nächsten Nadel, damit es zwischen deren Erscheinen einen zeitlich Abstand gibt (dies geschieht beim ersten Durchlauf von `update` in der Initialisierung mit dem Wert `5`).
 
 Zunächst wird in jedem Durchlauf bzw. Aufruf von `update` der Wert von `nextPinDist` mit dem zuvor festgelegten `scroll`-Betrag verringert:
 
@@ -270,9 +276,9 @@ options = {
   seed: 8,
 };
 
-let cord;
 let pins;
 let nextPinDist;
+let cord;
 const cordLength = 7;
 
 function update() {
@@ -314,7 +320,7 @@ function update() {
     cord.length = cordLength;
   }
   nextPinDist -= scroll;
-  while (nextPinDist < 0) {
+  if (nextPinDist < 0) {
     pins.push(vec(rnd(10, 90), 0));
     nextPinDist += rnd(5, 15);
   }

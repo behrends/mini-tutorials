@@ -10,9 +10,9 @@ options = {
   isPlayingBgm: true,
 };
 
-let cord;
 let pins;
 let nextPinDist;
+let cord;
 const cordLength = 7;
 
 function update() {
@@ -54,7 +54,7 @@ function update() {
     cord.length = cordLength;
   }
   nextPinDist -= scroll;
-  while (nextPinDist < 0) {
+  if (nextPinDist < 0) {
     pins.push(vec(rnd(10, 90), 0));
     nextPinDist += rnd(5, 15);
   }
