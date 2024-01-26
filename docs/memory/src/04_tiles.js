@@ -24,7 +24,7 @@ function draw() {
   background('lightgrey');
   for (let y = 0; y < 4; y++) {
     for (let x = 0; x < 4; x++) {
-      square(x * 150 + 10, y * 150 + 10, 140);
+      square(x * 150 + 5, y * 150 + 5, 140);
     }
   }
 }
